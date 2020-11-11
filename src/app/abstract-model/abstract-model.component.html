@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+  <div class="col-11">
+    <h4 class="pb-3">{{title}}</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr class="table-warning">
+            <th *ngFor="let head of tableModel.heading" [innerHTML]="head.content"></th>
+          </tr>
+          </thead>
+
+          <tbody (click)="getColumn($event, editModelKColumn)">
+          <tr *ngFor="let row of tableModel.row; let trIndex = index">
+            <td
+              *ngFor="let td of row; let tdIndex = index;"
+              [class.editable]="td.editable"
+              [class.table-warning]="tdIndex === 0"
+              [innerHTML]="td.content"
+              [attr.data-tr-index]="trIndex"
+              [attr.data-td-index]="tdIndex"
+              [attr.data-editable]="td.editable"
+              [style.width.px]="100"
+            ></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #editModelKColumn let-modal>
+        <div class="modal-header">
+          <div class="modal-title">Редагування значення</div>
+
+          <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label [innerHTML]="activeColTitle"></label>
+            <input class="form-control" type="number" [(ngModel)]="activeColl.content" ngbAutofocus>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="saveColumn()">
+            Зберегти
+          </button>
+        </div>
+      </ng-template>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-11">
+    <ng-content></ng-content>
+  </div>
+</div>
+
